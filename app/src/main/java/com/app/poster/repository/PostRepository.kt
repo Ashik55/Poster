@@ -15,7 +15,6 @@ class PostRepository(private val api: PostService) {
         try {
             emit(Resource.Loading) // Emit loading state
             val response = api.getPosts() // Make the network request
-            Log.d("Repository", response.toString())
             emit(Resource.Success(response))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown Error")) // Emit error state
