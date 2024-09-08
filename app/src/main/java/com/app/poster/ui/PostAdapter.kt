@@ -23,8 +23,10 @@ class PostAdapter(private val postList: List<Post>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val post = postList[position]
-        holder.title.text = post.title
-        holder.description.text = post.body
+        holder.apply {
+            title.text = post.title
+            description.text = post.body
+        }
     }
 
     override fun getItemCount(): Int = postList.size

@@ -52,4 +52,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.coil)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+
 }

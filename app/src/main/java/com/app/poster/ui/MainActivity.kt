@@ -37,20 +37,20 @@ class MainActivity : AppCompatActivity() {
             repository.getPosts().collect { resource ->
                 when (resource) {
                     is Resource.Error -> {
-                        progressBar.visibility = View.GONE
+                        hideProgressBar()
                         Log.d("response", "Error")
                     }
 
                     Resource.Loading -> {
-                        progressBar.visibility = View.VISIBLE
+                        showProgressBar()
                         Log.d("response", "Loading")
                     }
 
                     is Resource.Success -> {
-                        progressBar.visibility = View.GONE
+                        hideProgressBar()
                         val data = resource.data
-                        Log.d("response", data.size.toString())
-                        adapter = PostAdapter(data.filterNotNull())
+                        Log.d("response", data.toString())
+                        adapter = PostAdapter(data)
                         recyclerView.adapter = adapter
                     }
                 }
@@ -58,5 +58,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressBar() {
+        progressBar.visibility = View.GONE
     }
 }
