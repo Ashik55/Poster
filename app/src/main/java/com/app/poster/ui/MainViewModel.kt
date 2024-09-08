@@ -12,16 +12,15 @@ import kotlinx.coroutines.launch
 
 
 class MainViewModel : ViewModel() {
+
     // Saving only NewsResponse instead of the Resource wrapper
-    private val _postResponse = MutableStateFlow<PostResponse?>(null)
-    val postResponse: StateFlow<PostResponse?> = _postResponse
+    val postResponse = MutableStateFlow<PostResponse?>(null)
 
     // Separate variables to handle loading and error states
-    private val _isLoading = MutableStateFlow(true)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    val isLoading = MutableStateFlow(true)
 
-    private val _errorMessage = MutableStateFlow<String?>(null)
-    val errorMessage: StateFlow<String?> = _errorMessage
+    // Separate variables to handle loading and error states
+    val errorMessage = MutableStateFlow<String?>(null)
 
     private val repository = PostRepository(ApiClient.api)
 
@@ -35,15 +34,19 @@ class MainViewModel : ViewModel() {
             repository.getPosts().collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
-                        _isLoading.value = true // Set loading state
+                        isLoading.value = true // Set loading state
                     }
+
                     is Resource.Success -> {
-                        _isLoading.value = false // Stop loading
-                        _postResponse.value = resource.data // Set news data
+                        isLoading.value = false // Stop loading
+                        postResponse.value = resource.data // Set news data
+
+
                     }
+
                     is Resource.Error -> {
-                        _isLoading.value = false // Stop loading
-                        _errorMessage.value = resource.message // Set error message
+                        isLoading.value = false // Stop loading
+                        errorMessage.value = resource.message // Set error message
                     }
                 }
             }
