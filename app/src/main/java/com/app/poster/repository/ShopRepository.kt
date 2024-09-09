@@ -10,11 +10,17 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class ShopRepository(private val api: ShopService) {
-    suspend fun getProducts(): Flow<Resource<ProductsResponse>> = flow {
+    suspend fun getProducts(
+        limit: Number?,
+        sort: String?
+    ): Flow<Resource<ProductsResponse>> = flow {
         Log.d("Repository", "getPosts")
         try {
             emit(Resource.Loading) // Emit loading state
-            val response = api.getProducts() // Make the network request
+            val response = api.getProducts(
+                limit,
+                sort
+            ) // Make the network request
             emit(Resource.Success(response))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown Error")) // Emit error state

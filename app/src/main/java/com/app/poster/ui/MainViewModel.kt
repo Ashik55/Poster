@@ -31,7 +31,10 @@ class MainViewModel : ViewModel() {
 
     private fun getProducts() {
         viewModelScope.launch {
-            repository.getProducts().collect { resource ->
+            repository.getProducts(
+                limit = 100,
+                sort = "asc"
+            ).collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
                         isLoading.value = true // Set loading state
