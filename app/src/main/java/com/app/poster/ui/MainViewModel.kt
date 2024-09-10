@@ -22,6 +22,8 @@ class MainViewModel : ViewModel() {
     // Separate variables to handle loading and error states
     val errorMessage = MutableStateFlow<String?>(null)
 
+    var isViewed = false
+
     private val repository = ShopRepository(ApiClient.api)
 
 
@@ -32,8 +34,8 @@ class MainViewModel : ViewModel() {
     private fun getProducts() {
         viewModelScope.launch {
             repository.getProducts(
-                limit = 100,
-                sort = "asc"
+                limit = 10,
+                sort =null
             ).collect { resource ->
                 when (resource) {
                     is Resource.Loading -> {
@@ -43,8 +45,6 @@ class MainViewModel : ViewModel() {
                     is Resource.Success -> {
                         isLoading.value = false // Stop loading
                         productsResponse.value = resource.data // Set news data
-
-
                     }
 
                     is Resource.Error -> {
@@ -55,4 +55,6 @@ class MainViewModel : ViewModel() {
             }
         }
     }
+
+
 }

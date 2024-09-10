@@ -11,7 +11,9 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.app.poster.R
 import com.app.poster.data.products.Product
 import kotlinx.coroutines.launch
@@ -32,9 +34,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
 //        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = GridLayoutManager(this, 2)
+//        recyclerView.layoutManager = GridLayoutManager(this, 2)
+        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.addItemDecoration(ItemSpacingDecoration(horizontal = 4, vertical = 16))
-        recyclerView.setPadding(0, 0, 0, 80)
+
 
         handleLoading()
 

@@ -14,18 +14,20 @@ class ShopRepository(private val api: ShopService) {
         limit: Number?,
         sort: String?
     ): Flow<Resource<ProductsResponse>> = flow {
-        Log.d("Repository", "getPosts")
         try {
             emit(Resource.Loading) // Emit loading state
             val response = api.getProducts(
                 limit,
                 sort
             ) // Make the network request
+            Log.d("Repository", response.toString())
+
             emit(Resource.Success(response))
         } catch (e: Exception) {
             emit(Resource.Error(e.message ?: "Unknown Error")) // Emit error state
         }
     }.flowOn(Dispatchers.IO)
+
 
 
 }

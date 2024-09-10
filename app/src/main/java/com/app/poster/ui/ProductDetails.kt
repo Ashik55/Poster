@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.ViewModelProvider
 import coil.load
 import com.app.poster.R
 import com.app.poster.data.products.Product
@@ -21,6 +22,11 @@ class ProductDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_product_details)
+
+        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+
+
+        viewModel.isViewed = true
 
         product = intent.getParcelableExtra<Product>("PRODUCT")
 
