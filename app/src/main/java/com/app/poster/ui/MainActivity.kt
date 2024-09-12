@@ -53,13 +53,13 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-//        lifecycleScope.launch {
-//            viewModel.createProductResponse.collect{ response ->
-//                if(response != null){
-//                    adapter.addNewProduct(response)
-//                }
-//            }
-//        }
+        lifecycleScope.launch {
+            viewModel.createProductResponse.collect{ response ->
+                if(response != null){
+                    adapter.addNewProduct(response)
+                }
+            }
+        }
 
 
         add.setOnClickListener {

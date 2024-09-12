@@ -41,7 +41,7 @@ class MainViewModel : ViewModel() {
     private fun getProducts() {
         viewModelScope.launch {
             repository.getProducts(
-                limit = 2,
+                limit = 50,
                 sort = null
             ).collect { resource ->
                 when (resource) {
