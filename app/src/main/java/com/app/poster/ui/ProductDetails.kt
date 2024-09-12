@@ -1,6 +1,7 @@
 package com.app.poster.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -23,12 +24,8 @@ class ProductDetails : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_product_details)
 
-        val viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-
-        viewModel.isViewed = true
-
         product = intent.getParcelableExtra<Product>("PRODUCT")
+
 
         image = findViewById(R.id.image)
         title = findViewById(R.id.title)

@@ -13,7 +13,7 @@ import com.app.poster.data.products.Product
 import com.app.poster.data.products.ProductsResponse
 
 class ProductsAdapter(
-    private val productList: ProductsResponse,
+    var productList: MutableList<Product>,
     private val onItemClick: (Product) -> Unit
 ) :
     RecyclerView.Adapter<ProductsAdapter.ViewHolder>() {
@@ -49,4 +49,10 @@ class ProductsAdapter(
     }
 
     override fun getItemCount(): Int = productList.size
+
+
+    fun addNewProduct(response: Product) {
+        productList.add(response)
+        notifyDataSetChanged()
+    }
 }

@@ -23,15 +23,15 @@ interface ShopService {
 
     @GET("products/{id}")
     suspend fun getProductDetails(
-        @Path(value = "id") id: String?,
+        @Path(value = "id") id: Int?,
     ): Product
 
     @GET("categories")
     suspend fun getAllCategories(): Product
 
-    @GET("products/category/{categoryName}")
+    @GET("products/category/{catName}")
     suspend fun getProductsByCategory(
-        @Path(value = "categoryName") categoryName: String?,
+        @Path(value = "catName") categoryName: String?,
     ): Product
 
 
