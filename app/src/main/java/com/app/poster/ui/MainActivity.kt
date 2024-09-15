@@ -2,6 +2,7 @@ package com.app.poster.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -23,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progressBar: ProgressBar
-    private lateinit var adapter: ProductsAdapter
+    private lateinit var adapter: CategoryAdapter
     private lateinit var viewModel: MainViewModel
 
     private lateinit var add: ImageView
@@ -36,34 +37,22 @@ class MainActivity : AppCompatActivity() {
         add = findViewById(R.id.add)
         recyclerView = findViewById(R.id.recyclerView)
         progressBar = findViewById(R.id.progressBar)
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         recyclerView.addItemDecoration(ItemSpacingDecoration(horizontal = 4, vertical = 16))
+        adapter = CategoryAdapter(emptyList()) { item ->
+
+            Log.d("Clicked", item.toString())
+            navigateToDetails(item)
+        }
+        recyclerView.adapter = adapter
 
         handleLoading()
 
         lifecycleScope.launch {
-            viewModel.productsResponse.collect { response ->
-                if (response != null) {
-                    adapter = ProductsAdapter(response) { item ->
-                        navigateToDetails(item)
-                    }
-                    recyclerView.adapter = adapter
-                }
+            viewModel.catProductList.collect { data ->
+                adapter.addNewCategory(data)
             }
-        }
-
-
-        lifecycleScope.launch {
-            viewModel.createProductResponse.collect{ response ->
-                if(response != null){
-                    adapter.addNewProduct(response)
-                }
-            }
-        }
-
-
-        add.setOnClickListener {
-            viewModel.onCreateProduct()
         }
 
 

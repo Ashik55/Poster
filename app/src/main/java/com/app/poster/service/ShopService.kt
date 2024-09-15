@@ -15,6 +15,7 @@ import retrofit2.http.Query
 
 
 interface ShopService {
+
     @GET("products")
     suspend fun getProducts(
         @Query("limit") limit: Number?,
@@ -26,13 +27,13 @@ interface ShopService {
         @Path(value = "id") id: Int?,
     ): Product
 
-    @GET("categories")
-    suspend fun getAllCategories(): Product
+    @GET("products/categories")
+    suspend fun getAllCategories(): List<String>
 
     @GET("products/category/{catName}")
     suspend fun getProductsByCategory(
         @Path(value = "catName") categoryName: String?,
-    ): Product
+    ): List<Product>
 
 
     @POST("products")

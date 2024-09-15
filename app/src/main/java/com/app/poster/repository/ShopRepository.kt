@@ -13,14 +13,12 @@ import kotlinx.coroutines.flow.flowOn
 
 class ShopRepository(private val api: ShopService) {
     suspend fun getProducts(
-        limit: Number?,
-        sort: String?
+        limit: Number?, sort: String?
     ): Flow<Resource<ProductsResponse>> = flow {
         try {
             emit(Resource.Loading) // Emit loading state
             val response = api.getProducts(
-                limit,
-                sort
+                limit, sort
             ) // Make the network request
             Log.d("Repository", response.toString())
 
@@ -30,8 +28,32 @@ class ShopRepository(private val api: ShopService) {
         }
     }.flowOn(Dispatchers.IO)
 
+
+    suspend fun getCategories(): Flow<Resource<List<String>>> = flow {
+        try {
+            emit(Resource.Loading)
+            val response = api.getAllCategories()
+            emit(Resource.Success(response))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message ?: "Unknown Error")) // Emit error state
+        }
+    }.flowOn(Dispatchers.IO)
+
+    suspend fun getProductsByCategory(
+        name: String?
+    ): Flow<Resource<List<Product>>> = flow {
+        try {
+            emit(Resource.Loading) // Emit loading state
+            val response = api.getProductsByCategory(name)
+            emit(Resource.Success(response))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.message ?: "Unknown Error")) // Emit error state
+        }
+    }.flowOn(Dispatchers.IO)
+
+
     suspend fun createProduct(
-        product:CreateProductPayload
+        product: CreateProductPayload
     ): Flow<Resource<Product>> = flow {
         try {
             emit(Resource.Loading) // Emit loading state
