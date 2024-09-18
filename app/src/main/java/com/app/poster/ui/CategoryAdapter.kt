@@ -46,7 +46,6 @@ class CategoryAdapter(
                 onProductClick
             }
 
-
         }
     }
 
